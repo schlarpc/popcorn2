@@ -151,18 +151,16 @@ function playMovie(filename) {
 }
 
 function togglePauseVideo() {
-    if ($('#groupPlayPause').data('state') == 'playing') {
+    if ($('#play-pause-video').data('state') == 'playing') {
         $.getJSON('/api/admin/pause')
-        $('#groupPlayPause').data('state', 'paused');
-        $('#groupPlayPause').html('Play All');
+        $('#play-pause-video').data('state', 'paused');
+        $('#play-pause-video').html('Play All');
     } else {
         $.getJSON('/api/admin/resume');
-        $('#groupPlayPause').data('state', 'playing');
-        $('#groupPlayPause').html('Pause All');
+        $('#play-pause-video').data('state', 'playing');
+        $('#play-pause-video').html('Pause All');
     }
 }
-
-//
 
 function toggleVideos() {
     if ($('.expandControl').css('bottom') == '0px') {
@@ -184,10 +182,8 @@ function toggleVideos() {
                         prettyName += nameTemp[index];
                     }
                     prettyName = prettyName.substring(0, 40);
-                    var newElement = "<li data-filename=\"" + value + "\"><article><h2>" + prettyName + "</h2></article></li>";
-                    $('.expandControl ul').append(newElement);
+                    $('.expandControl ul').append($('<li />').data('filename', value).append($('<article />').append($('<h2 />').text(prettyName))));
                 });
-
                 $('.expandControl li').click(function () {
                     $('.expandControl li').removeClass('selectedItem');
                     if ($(this).has('.movieDetails').length == 0) {
@@ -195,7 +191,7 @@ function toggleVideos() {
                         $(this).append($('<div />').addClass('movieDetails').append(
                             $('<img />').attr('src', '/api/thumbnail?time=120&path=' + encodeURIComponent(filename)),
                             $('<a />').text('Play').click(function () {
-                                console.log('Issuing play request for: ', filename);
+                                console.log('Issuing play request for:', filename);
                                 playMovie(filename);
                             }),
                             $('<a />').text('Delete')
@@ -207,9 +203,6 @@ function toggleVideos() {
         }
     }
 }
-
-
-//
 
 $(document).ready(function () {
     $('.progress').hover(showProgressBar, hideProgressBar).click(seekProgressBar);
