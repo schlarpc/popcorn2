@@ -1,0 +1,213 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html,body {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    overflow: hidden;
+}
+
+body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+}
+
+a {
+    cursor: pointer;
+}
+
+.videoContainer {
+    position: absolute;
+    height: calc(100% - 27px);
+    width: 100%;
+    overflow: hidden;
+    z-index: 0;
+    text-align: center;
+    transition: width 1s;
+}
+
+.videoContainer video {
+    max-width: 100%;
+    min-height: 100%;
+}
+
+.statusbar {
+    width: 100%;
+    height: 31px;
+    background-color: #1B1B1B;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+}
+
+.progress {
+    width: 100%;
+    height: 5px;
+    background-color: #777777;
+    transition: height .5s, margin-top .5s;
+}
+
+.progressdone {
+    background-color: #CD181F;
+    width: 0;
+    height: 100%;
+    position: relative;
+}
+
+.controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 27px;
+    line-height: 27px;
+}
+
+.controls img {
+    margin-top: 3px;
+}
+
+.left {
+    float: left;
+}
+
+.left img {
+    margin-left: 8px;
+    float: left;
+}
+
+.right {
+    float: right;
+    margin-right: 8px;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+}
+
+.slider {
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    position: absolute;
+    bottom: -2px;
+    right: -5px;
+    background-color: #FFFFFF;
+    display: none;
+}
+
+.time {
+    float: left;
+    margin-left: 15px;
+    color: #777777;
+}
+
+#volume-bar {
+    margin-top: 3px;
+    margin-left: 8px;
+    width: 60px;
+    float: left;
+}
+
+.volume {
+    margin-left: 25px;
+    float: left;
+}
+
+.right div, .right > a {
+    float: right;
+}
+
+.expandControl {
+    width: 400px;
+    height: 500px;
+    color: #FFF;
+    position: absolute;
+    bottom: -474px;
+    right: 40px;
+    z-index: 999;
+    background-color: rgba(34,34,34,.7);
+    transition: bottom .5s;
+}
+
+.expandControl h1 {
+    font-size: 10px;
+    text-align: center;
+    height: 27px;
+    line-height: 27px;
+    background-color: #1B1B1B;
+    cursor: pointer;
+}
+
+.expandControl ul {
+    width: 100%;
+    margin: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 442px;
+}
+
+.expandControl li {
+    line-height: 24px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 26px;
+    overflow: hidden;
+}
+
+.expandControl li:hover {
+    background-color: #3a3a3a;
+}
+
+.expandControl li a, .expandControl li a:visited {
+    color: #999;
+    text-decoration: none;
+}
+
+.expandControl li a:hover {
+    color: #FFF;
+}
+
+.expandControl #controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 26px;
+    width: 400px;
+    background-color: #1B1B1B;
+}
+
+.expandControl #controls a {
+    display: block;
+    width: 33%;
+    float: left;
+    text-align: center;
+}
+
+.movieDetails {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.movieDetails img {
+    height: 120px;
+    min-width: 200px;
+}
+
+.movieDetails a {
+    text-transform: uppercase;
+    font-size: 10px;
+    width: 50%;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+}
+
+.expandControl li.selectedItem, .expandControl li.selectedItem:hover {
+    background-color: #525252 !important;
+    height: 200px;
+}
