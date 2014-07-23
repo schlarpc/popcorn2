@@ -184,11 +184,13 @@ function toggleVideos() {
                         var filename = $(this).data('filename');
                         $(this).append($('<div />').addClass('movieDetails').append(
                             $('<img />').attr('src', '/api/thumbnail?time=120&path=' + encodeURIComponent(filename)),
-                            $('<a />').text('Play').click(function () {
-                                console.log('Issuing play request for:', filename);
-                                playMovie(filename);
-                            }),
-                            $('<a />').text('Delete')
+                            $('<div />').append(
+                                $('<a />').text('Play').click(function () {
+                                    console.log('Issuing play request for:', filename);
+                                    playMovie(filename);
+                                }),
+                                $('<a />').text('Delete')
+                            )
                         ));
                     }
                     $(this).addClass('selectedItem');

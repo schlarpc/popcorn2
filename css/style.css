@@ -198,13 +198,18 @@ main {
     min-width: 200px;
 }
 
+.movieDetails div {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
 .movieDetails a {
     text-transform: uppercase;
     font-size: 10px;
-    width: 50%;
-    float: left;
     height: 24px;
     line-height: 24px;
+    display: table-cell;
 }
 
 .expandControl li.selectedItem, .expandControl li.selectedItem:hover {
