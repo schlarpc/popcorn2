@@ -170,19 +170,13 @@ function toggleVideos() {
         if (videoList == undefined) {
             $.getJSON("/api/admin/videos", function (data) {
                 videoList = data;
-                var regEx = new RegExp("^.*/(.+)\.\w+$");
                 $.each(videoList, function (index, value) {
-                    var nameTemp = value.split('/');
-                    var prettyName = "";
-                    nameTemp = nameTemp[nameTemp.length - 1].split('.');
-                    for (index = 0; index < (nameTemp.length - 1); ++index) {
-                        if (index != 0) {
-                            prettyName += '.';
-                        }
-                        prettyName += nameTemp[index];
-                    }
-                    prettyName = prettyName.substring(0, 40);
-                    $('.expandControl ul').append($('<li />').data('filename', value).append($('<article />').append($('<h2 />').text(prettyName))));
+                    var prettyName = /^.*\/(.+)\.\w+$/.exec(value)[1].substring(0, 40);
+                    $('.expandControl ul').append(
+                        $('<li />').data('filename', value).append(
+                            $('<article />').append($('<h2 />').text(prettyName))
+                        ).attr('title', value)
+                    );
                 });
                 $('.expandControl li').click(function () {
                     $('.expandControl li').removeClass('selectedItem');
