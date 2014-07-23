@@ -13,9 +13,9 @@ if ($thumb !== FALSE) {
 } else {
     $width = $config['thumbnail_width'];
     $height = $width * 3 / 4;
+    $im = imagecreatetruecolor($width, $height);
     $fg = imagecolorallocate($im, 255, 255, 255);
     $bg = imagecolorallocate($im, 0, 0, 0);
-    $im = imagecreatetruecolor($width, $height);
     imagefill($im, 0, 0, $bg);
     imagestring($im, 4, 0, $height / 2, 'Thumbnail error', $fg);
     imagejpeg($im);
