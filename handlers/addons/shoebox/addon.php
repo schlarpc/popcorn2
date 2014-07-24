@@ -40,7 +40,7 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
         shoebox_sort_by_rating($search_results);
         
         $resp = array("resources" => array());
-        foreach ($result in array_slice($search_results, 0, 50)) {
+        foreach ($result as array_slice($search_results, 0, 50)) {
             $resp["resources"][] = array(
                 "name" => $result["title"],
                 "href" => "/api/addons/shoebox/videos/" . $result["type"] . "/" . $result["id"],
