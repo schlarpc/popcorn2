@@ -34,7 +34,7 @@ class VideosInfoHandler extends AuthenticationRequired {
             "name"        => path_to_friendly_name($video),
             "description" => NULL,
             "path"        => $video,
-            "image"       => "/api/videos/" . $video_hash . "/thumbnail?time=120",
+            "image"       => "/api/videos/" . $video_hash . "/thumbnail?time=" . (int) (get_duration($video) * .1),
             "duration"    => get_duration($video),
         );
         json_response($resp);
