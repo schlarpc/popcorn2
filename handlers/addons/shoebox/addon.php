@@ -150,7 +150,18 @@ class ShoeboxShowsEpisodeHandler extends AuthenticationRequired {
     function get($id, $season, $episode) {
         $sb = new Shoebox();
         $data = $sb->getEpisodeData($id, $season, $episode, TRUE);
-        
+        $title = $data["title"] . "- Season $season, Episode $episode";
+        if ($data["episode_title"] !== "") {
+            $title .= " ({$data["episode_title"]})";
+        }
+        $resp = array(
+            "name"        => $title,
+            "description" => $data["description"],
+            "path"        => $data["langs"][0]["stream"],
+            "image"       => $data["poster"],
+            "type"        => "video",
+            "duration"    => get_duration($video),
+        );
         json_response($data);
     }
 }
