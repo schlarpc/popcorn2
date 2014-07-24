@@ -8,4 +8,4 @@ class ShoeboxHandler extends AuthenticationRequired {
 
 $addon_routes = array(
     "/api/addons/shoebox" => "ShoeboxHandler",
-)
+);
