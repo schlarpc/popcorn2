@@ -2,12 +2,6 @@
 
 require("handlers/addons/shoebox/lib/shoebox.php");
 
-function shoebox_sort_by_rating(&$arr) {
-    usort($arr, function ($a, $b) { return intval($b['rating']) - intval($a['rating']); });
-    return $arr;
-}
-
-
 class ShoeboxHandler extends AuthenticationRequired {
     function get() {
         $resp = array(
@@ -37,7 +31,7 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
                 }
             }
         }
-        shoebox_sort_by_rating($search_results);
+        usort($search_results, function ($a, $b) { return intval($b['rating']) - intval($a['rating']); });
         
         $resp = array("resources" => array());
         foreach (array_slice($search_results, 0, 50) as $result) {
@@ -50,7 +44,6 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
         json_response($resp);
     }
 }
-
 
 class ShoeboxVideosHandler extends AuthenticationRequired {
     function get() {
@@ -75,8 +68,14 @@ class ShoeboxMoviesListHandler extends AuthenticationRequired {
         $sb = new Shoebox();
         $resp = array("resources" => array());
         
-        print_r($sb->getMovieList());
-        exit();
+        foreach(array_slice($sb->getMovieList(), 0, 50) as $idx => $item) {
+            $resp["resources"][] = array(
+                "name" => $item["title"],
+                "href" => "/api/addons/shoebox/videos/movies/" . $item["id"];
+                "type" => "video",
+            );
+        }
+        json_response($resp);
     }
 }
 
@@ -86,5 +85,5 @@ $addon_routes = array(
     "/api/addons/shoebox/search" => "ShoeboxSearchHandler",
     "/api/addons/shoebox/videos" => "ShoeboxVideosHandler",
     "/api/addons/shoebox/videos/movies" => "ShoeboxMoviesListHandler",
-    //"/api/addons/shoebox/videos/shows" => "ShoeboxShowsListHandler",
+    "/api/addons/shoebox/videos/shows" => "ShoeboxShowsListHandler",
 );
