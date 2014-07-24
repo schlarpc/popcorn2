@@ -162,7 +162,7 @@ class ShoeboxShowsEpisodeHandler extends AuthenticationRequired {
             "type"        => "video",
             "duration"    => get_duration($video),
         );
-        json_response($data);
+        json_response($resp);
     }
 }
 
