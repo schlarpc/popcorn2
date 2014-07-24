@@ -100,7 +100,7 @@ class ShoeboxMoviesItemHandler extends AuthenticationRequired {
         $sb = new Shoebox();
         $data = $sb->getMovieData($id, TRUE);
         $resp = array(
-            "name"        => $data["title"]
+            "name"        => $data["title"],
             "description" => $data["description"],
             "path"        => $data["langs"][0]["stream"],
             "image"       => $data["poster"],
