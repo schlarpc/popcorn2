@@ -79,6 +79,21 @@ class ShoeboxMoviesListHandler extends AuthenticationRequired {
     }
 }
 
+class ShoeboxShowsListHandler extends AuthenticationRequired {
+    function get() {
+        $sb = new Shoebox();
+        $resp = array("resources" => array());
+        
+        foreach(array_slice($sb->getTVList(), 0, 50) as $idx => $item) {
+            $resp["resources"][] = array(
+                "name" => $item["title"],
+                "href" => "/api/addons/shoebox/videos/shows/" . $item["id"];
+                "type" => "directory",
+            );
+        }
+        json_response($resp);
+    }
+}
 
 $addon_routes = array(
     "/api/addons/shoebox"        => "ShoeboxHandler",
