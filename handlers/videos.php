@@ -52,7 +52,7 @@ class VideosThumbnailHandler {
         }
         
         header("Content-type: image/jpeg");
-        $thumb = get_thumbnail($_GET["path"], $_GET["time"]);
+        $thumb = get_thumbnail($video, (int) $_GET["time"]);
 
         if ($thumb !== FALSE) {
             echo $thumb;
