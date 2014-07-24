@@ -95,10 +95,30 @@ class ShoeboxShowsListHandler extends AuthenticationRequired {
     }
 }
 
+class ShoeboxMoviesItemHandler extends AuthenticationRequired {
+    function get($id) {
+        $sb = new Shoebox();
+        $data = $sb->getMovieData($id);
+        json_response($data);
+    }
+}
+
+class ShoeboxShowsItemHandler extends AuthenticationRequired {
+    function get($id) {
+        $sb = new Shoebox();
+        $data = $sb->getTVData($id);
+        json_response($data);
+    }
+}
+
 $addon_routes = array(
-    "/api/addons/shoebox"        => "ShoeboxHandler",
-    "/api/addons/shoebox/search" => "ShoeboxSearchHandler",
-    "/api/addons/shoebox/videos" => "ShoeboxVideosHandler",
-    "/api/addons/shoebox/videos/movies" => "ShoeboxMoviesListHandler",
-    "/api/addons/shoebox/videos/shows" => "ShoeboxShowsListHandler",
+    "/api/addons/shoebox"                                      => "ShoeboxHandler",
+    "/api/addons/shoebox/search"                               => "ShoeboxSearchHandler",
+    "/api/addons/shoebox/videos"                               => "ShoeboxVideosHandler",
+    "/api/addons/shoebox/videos/movies"                        => "ShoeboxMoviesListHandler",
+    "/api/addons/shoebox/videos/movies/:number"                => "ShoeboxMoviesItemHandler",
+    "/api/addons/shoebox/videos/shows"                         => "ShoeboxShowsListHandler",
+    "/api/addons/shoebox/videos/shows/:number"                 => "ShoeboxShowsItemHandler",
+    "/api/addons/shoebox/videos/shows/:number/:number"         => "ShoeboxShowsSeasonHandler",
+    "/api/addons/shoebox/videos/shows/:number/:number/:number" => "ShoeboxShowsEpisodeHandler",
 );
