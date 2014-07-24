@@ -2,7 +2,6 @@
 
 class HomeHandler {
     function get() {
-        echo "hi";
         include("templates/home.html");
     }
 }
