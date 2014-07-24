@@ -4,11 +4,20 @@ require("lib/toro.php");
 require("lib/common.php");
 require("lib/config.php");
 require("lib/stream.php");
-require("lib/shoebox.php");
 require("handlers/static.php");
 require("handlers/videos.php");
 require("handlers/stream.php");
-//require("handlers/addons.php");
+require("handlers/addons.php");
+
+$addon_dir = "handlers/addons";
+if ($dh = opendir($addon_dir)) {
+    while (($entry = readdir($dh)) !== false) {
+        if ($entry != "." && $entry != ".." && is_dir($addon_dir . $entry)) {
+            echo "$entry\n";
+        }
+    }
+    closedir($dh);
+}
 
 ToroHook::add("404",  function() {
     http_response_code(404);
@@ -23,4 +32,5 @@ Toro::serve(array(
     "/api/videos/:alpha/thumbnail" => "VideosThumbnailHandler",
     "/api/stream"                  => "StreamStatusHandler",
     "/api/stream/:alpha"           => "StreamCommandHandler",
+    "/api/addons"                  => "AddonsListHandler",
 ));
