@@ -135,7 +135,7 @@ class ShoeboxShowsSeasonHandler extends AuthenticationRequired {
         $resp = array("resources" => array());
         
         $data = $sb->getTVData($id);
-        foreach ($data["season_info"]["titles"] as $idx => $item) {
+        foreach ($data["season_info"][$season]["titles"] as $idx => $item) {
             $resp["resources"][] = array(
                 "name" => "Episode " . $idx . ($item === "" ? "" : " ($item)"),
                 "href" => "/api/addons/shoebox/videos/shows/" . $id . "/" . $season . "/" . $idx,
