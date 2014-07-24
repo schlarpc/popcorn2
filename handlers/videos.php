@@ -58,7 +58,7 @@ class VideosThumbnailHandler {
             echo $thumb;
 
         } else {
-            http_status_code(400);
+            http_response_code(400);
         
             $width = $config['thumbnail_width'];
             $height = $width * 9 / 16;
