@@ -50,6 +50,7 @@ function heartbeatStatus() {
     }, function () {
         setTimeout(heartbeatStatus, 5000);
     });
+    console.log("heartbeat");
 }
 
 function toggleFullScreen() {
@@ -95,7 +96,7 @@ function timeToString(time) {
 }
 
 function syncElapsed() {
-    if (onTime == true) {
+    if (onTime == true && video.networkState != 3) {
         $.getJSON("/api/stream", function (data) {
             current = secondsToTime(data.elapsed);
             duration = secondsToTime(data.duration);
@@ -107,7 +108,7 @@ function syncElapsed() {
 }
 
 function togglePauseStream() {
-    if (video.paused == true) {
+    if (video.paused == true && video.networkState != 3) {
         video.play();
     } else {
         video.pause();
@@ -148,6 +149,20 @@ function stopVideo() {
 
 function playMovie(filename) {
     $.post('/api/stream/play', {'path': filename});
+}
+
+function playMovie(filename) {
+    $.post('/api/stream/play', {'path': filename});
+}
+
+function deleteMovie(path) {
+    $.ajax({
+        url: path,
+        type: 'DELETE',
+        success: function(result) {
+            console.log('success?');
+        }
+    });
 }
 
 function togglePauseVideo() {
@@ -191,7 +206,11 @@ function toggleVideos() {
                                         console.log('Issuing play request for:', filename);
                                         playMovie(filename);
                                     }),
-                                    $('<a />').text('Delete')
+                                    $('<a />').text('Delete').click(function () {
+                                        console.log('Issuing delete request for', listItem.data('href'));
+                                        deleteMovie(listItem.data('href'));;
+                                        $(this).parents('li').remove();
+                                    })
                                 )
                             ));
                         });
@@ -205,7 +224,7 @@ function toggleVideos() {
 
 $(document).ready(function () {
     $('.progress').hover(showProgressBar, hideProgressBar).click(seekProgressBar);
-    $('video').click(togglePauseStream).on('play', onVideoPlay).on('pause', onVideoPause);
+    $('video').click(togglePauseStream).on('playing', onVideoPlay).on('pause', onVideoPause);
     $('#volume-bar').change(updateVolume);
     $('#playpause').click(togglePauseStream);
     $('#refresh').click(reloadStream);
@@ -214,9 +233,5 @@ $(document).ready(function () {
     $('#play-pause-video').click(togglePauseVideo);
     //$('#add-video').click(addVideo);
     $('#stop-video').click(stopVideo);
-
-    if ($('video')[0].networkState == 3) {
-        console.log("No movie playing, scheduling heartbeat");
-        heartbeatStatus();
-    }
+    heartbeatStatus();
 });
