@@ -1,26 +1,2 @@
-Options -Indexes +FollowSymLinks
-
-RewriteEngine on
-
-RewriteRule ^favicon.ico$                /img/favicon.ico                  [L]
-
-RewriteRule ^api/?$                      /backend/docs.php                 [L]
-RewriteRule ^api/status$                 /backend/status.php               [L]
-RewriteRule ^api/thumbnail$              /backend/thumbnail.php            [L,QSA]
-
-RewriteRule ^api/admin/play$             /backend/control.php?cmd=play     [L,QSA]
-RewriteRule ^api/admin/pause$            /backend/control.php?cmd=pause    [L]
-RewriteRule ^api/admin/resume$           /backend/control.php?cmd=resume   [L]
-RewriteRule ^api/admin/stop$             /backend/control.php?cmd=stop     [L]
-RewriteRule ^api/admin/videos$           /backend/control.php?cmd=videos   [L]
-
-RewriteRule ^api/admin/shoebox/search$   /backend/shoebox.php?cmd=search   [L,QSA]
-RewriteRule ^api/admin/shoebox/movie$    /backend/shoebox.php?cmd=movie    [L,QSA]
-RewriteRule ^api/admin/shoebox/tv$       /backend/shoebox.php?cmd=tv       [L,QSA]
-RewriteRule ^api/admin/shoebox/episode$  /backend/shoebox.php?cmd=episode  [L,QSA]
-
-RewriteRule ^api/admin/download/youtube$ /backend/download.php?cmd=youtube [L,QSA]
-RewriteRule ^api/admin/download/torrent$ /backend/download.php?cmd=torrent [L,QSA]
-
-RewriteCond %{THE_REQUEST} "^\w+\s+/backend"
-RewriteRule ^ - [R=404,L]
+DirectoryIndex index.php
+FallbackResource /index.php
