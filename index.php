@@ -9,7 +9,7 @@ require("handlers/videos.php");
 require("handlers/stream.php");
 require("handlers/addons.php");
 
-$addon_dir = "handlers/addons";
+$addon_dir = "handlers/addons/";
 if ($dh = opendir($addon_dir)) {
     while (($entry = readdir($dh)) !== false) {
         if ($entry != "." && $entry != ".." && is_dir($addon_dir . $entry)) {
