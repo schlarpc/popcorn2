@@ -70,11 +70,21 @@ class ShoeboxVideosHandler extends AuthenticationRequired {
     }
 }
 
+class ShoeboxMoviesListHandler extends AuthenticationRequired {
+    function get() {
+        $sb = new Shoebox();
+        $resp = array("resources" => array());
+        
+        print_r($sb->getMovieList());
+        exit();
+    }
+}
+
 
 $addon_routes = array(
     "/api/addons/shoebox"        => "ShoeboxHandler",
     "/api/addons/shoebox/search" => "ShoeboxSearchHandler",
     "/api/addons/shoebox/videos" => "ShoeboxVideosHandler",
-    //"/api/addons/shoebox/videos" => "ShoeboxMoviesListHandler",
-    //"/api/addons/shoebox/videos" => "ShoeboxShowsListHandler",
+    "/api/addons/shoebox/videos/movies" => "ShoeboxMoviesListHandler",
+    //"/api/addons/shoebox/videos/shows" => "ShoeboxShowsListHandler",
 );
