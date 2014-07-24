@@ -51,7 +51,7 @@ class VideosThumbnailHandler {
         header("Content-type: image/jpeg");
         
         $time = 0;
-        if (isset($_GET['time']) {
+        if (isset($_GET['time'])) {
             $time = (int) $_GET['time'];
         }
         
