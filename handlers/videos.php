@@ -58,6 +58,8 @@ class VideosThumbnailHandler {
             echo $thumb;
 
         } else {        
+            http_response_code(400);
+            
             $width = Config::get('thumbnail_width');
             $height = $width * 9 / 16;
             
