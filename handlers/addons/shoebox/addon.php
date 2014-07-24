@@ -66,7 +66,7 @@ class ShoeboxVideosHandler extends AuthenticationRequired {
                 "type" => "directory",
             ),
         ));
-        json_reponse($resp);
+        json_response($resp);
     }
 }
 
