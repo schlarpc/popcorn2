@@ -58,7 +58,7 @@ class VideosThumbnailHandler {
             echo $thumb;
 
         } else {        
-            $width = $config['thumbnail_width'];
+            $width = Config::get('thumbnail_width');
             $height = $width * 9 / 16;
             
             $font_size = 5;
