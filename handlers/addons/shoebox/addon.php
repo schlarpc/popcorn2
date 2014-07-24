@@ -105,7 +105,7 @@ class ShoeboxMoviesItemHandler extends AuthenticationRequired {
             "path"        => $data["langs"][0]["stream"],
             "image"       => $data["poster"],
             "type"        => "video",
-            "duration"    => get_duration($video),
+            "duration"    => get_duration($data["langs"][0]["stream"]),
         );
         json_response($resp);
     }
@@ -160,7 +160,7 @@ class ShoeboxShowsEpisodeHandler extends AuthenticationRequired {
             "path"        => $data["langs"][0]["stream"],
             "image"       => $data["thumb"],
             "type"        => "video",
-            "duration"    => get_duration($video),
+            "duration"    => get_duration($data["langs"][0]["stream"]),
         );
         json_response($resp);
     }
