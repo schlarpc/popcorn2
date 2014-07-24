@@ -1,6 +1,6 @@
 <?php
 
-require("/handlers/addons/shoebox/lib/shoebox.php");
+require("handlers/addons/shoebox/lib/shoebox.php");
 
 function shoebox_sort_by_rating(&$arr) {
     usort($arr, function ($a, $b) { return intval($b['rating']) - intval($a['rating']); });
