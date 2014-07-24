@@ -17,9 +17,9 @@ function hideProgressBar() {
 }
 
 function seekProgressBar(e) {
-    $.getJSON("/api/status", function (data) {
+    $.getJSON("/api/stream", function (data) {
         var seconds = Math.floor((e.clientX / $(window).width()) * data.duration);
-        $.getJSON("/api/admin/play", {"path": data.current_video, "time": seconds});
+        $.post("/api/stream/play", {"path": data.current_video, "time": seconds});
     });
 }
 
@@ -41,8 +41,8 @@ function updateVolume() {
 }
 
 function heartbeatStatus() {
-    $.getJSON("/api/status", function (data) {
-        if (data.streaming == true && data.time_elapsed != false) {
+    $.getJSON("/api/stream", function (data) {
+        if (data.streaming == true && data.elapsed != false) {
             reloadStream();
         } else {
             setTimeout(heartbeatStatus, 5000);
@@ -96,8 +96,8 @@ function timeToString(time) {
 
 function syncElapsed() {
     if (onTime == true) {
-        $.getJSON("/api/status", function (data) {
-            current = secondsToTime(data.time_elapsed);
+        $.getJSON("/api/stream", function (data) {
+            current = secondsToTime(data.elapsed);
             duration = secondsToTime(data.duration);
         });
     }
@@ -143,20 +143,20 @@ function updateElapsed() {
 }
 
 function stopVideo() {
-    $.getJSON('/api/admin/stop');
+    $.post('/api/stream/stop');
 }
 
 function playMovie(filename) {
-    $.getJSON('/api/admin/play', {'path': filename});
+    $.post('/api/stream/play', {'path': filename});
 }
 
 function togglePauseVideo() {
     if ($('#play-pause-video').data('state') == 'playing') {
-        $.getJSON('/api/admin/pause')
+        $.post('/api/stream/pause')
         $('#play-pause-video').data('state', 'paused');
         $('#play-pause-video').html('Play All');
     } else {
-        $.getJSON('/api/admin/resume');
+        $.getJSON('/api/stream/resume');
         $('#play-pause-video').data('state', 'playing');
         $('#play-pause-video').html('Pause All');
     }
@@ -167,31 +167,33 @@ function toggleVideos() {
         $('.expandControl').css('bottom', '-474px');
     } else {
         $('.expandControl').css('bottom', 0);
-        if (videoList == undefined) {
-            $.getJSON("/api/admin/videos", function (data) {
+        if (videoList === undefined) {
+            $.getJSON("/api/videos", function (data) {
                 videoList = data;
-                $.each(videoList, function (index, value) {
-                    var prettyName = /^.*\/(.+)\.\w+$/.exec(value)[1].substring(0, 40);
+                $.each(videoList['resources'], function(index, video) {
                     $('.expandControl ul').append(
-                        $('<li />').data('filename', value).append(
-                            $('<article />').append($('<h2 />').text(prettyName))
-                        ).attr('title', value)
+                        $('<li />').data('href', video.href).append(
+                            $('<article />').append($('<h2 />').text(video.name.substring(0, 40)))
+                        )
                     );
                 });
                 $('.expandControl li').click(function () {
                     $('.expandControl li').removeClass('selectedItem');
                     if ($(this).has('.movieDetails').length == 0) {
-                        var filename = $(this).data('filename');
-                        $(this).append($('<div />').addClass('movieDetails').append(
-                            $('<img />').attr('src', '/api/thumbnail?time=120&path=' + encodeURIComponent(filename)),
-                            $('<div />').append(
-                                $('<a />').text('Play').click(function () {
-                                    console.log('Issuing play request for:', filename);
-                                    playMovie(filename);
-                                }),
-                                $('<a />').text('Delete')
-                            )
-                        ));
+                        $.getJSON($(this).data('href'), function (info) {
+                            var filename = info.path;
+                        
+                            $(this).append($('<div />').addClass('movieDetails').append(
+                                $('<img />').attr('src', info.image),
+                                $('<div />').append(
+                                    $('<a />').text('Play').click(function () {
+                                        console.log('Issuing play request for:', filename);
+                                        playMovie(filename);
+                                    }),
+                                    $('<a />').text('Delete')
+                                )
+                            ));
+                        });
                     }
                     $(this).addClass('selectedItem');
                 });
