@@ -74,7 +74,7 @@ class ShoeboxVideosHandler extends AuthenticationRequired {
 $addon_routes = array(
     "/api/addons/shoebox"        => "ShoeboxHandler",
     "/api/addons/shoebox/search" => "ShoeboxSearchHandler",
-    //"/api/addons/shoebox/videos" => "ShoeboxVideosHandler",
+    "/api/addons/shoebox/videos" => "ShoeboxVideosHandler",
     //"/api/addons/shoebox/videos" => "ShoeboxMoviesListHandler",
     //"/api/addons/shoebox/videos" => "ShoeboxShowsListHandler",
 );
