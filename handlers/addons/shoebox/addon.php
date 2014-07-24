@@ -44,7 +44,7 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
             $resp["resources"][] = array(
                 "name" => $result["title"],
                 "href" => "/api/addons/shoebox/videos/" . $result["type"] . "/" . $result["id"],
-                "type" => $result["type"] === "movies" ? "video" : "directory";
+                "type" => $result["type"] === "movies" ? "video" : "directory",
             );
         }
         json_response($resp);
