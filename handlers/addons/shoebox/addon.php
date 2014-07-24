@@ -158,7 +158,7 @@ class ShoeboxShowsEpisodeHandler extends AuthenticationRequired {
             "name"        => $title,
             "description" => $data["description"],
             "path"        => $data["langs"][0]["stream"],
-            "image"       => $data["poster"],
+            "image"       => $data["thumb"],
             "type"        => "video",
             "duration"    => get_duration($video),
         );
