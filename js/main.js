@@ -178,12 +178,13 @@ function toggleVideos() {
                     );
                 });
                 $('.expandControl li').click(function () {
+                    var listItem = $(this);
                     $('.expandControl li').removeClass('selectedItem');
-                    if ($(this).has('.movieDetails').length == 0) {
-                        $.getJSON($(this).data('href'), function (info) {
+                    if (listItem.has('.movieDetails').length == 0) {
+                        $.getJSON(listItem.data('href'), function (info) {
                             var filename = info.path;
                         
-                            $(this).append($('<div />').addClass('movieDetails').append(
+                            listItem.append($('<div />').addClass('movieDetails').append(
                                 $('<img />').attr('src', info.image),
                                 $('<div />').append(
                                     $('<a />').text('Play').click(function () {
@@ -195,7 +196,7 @@ function toggleVideos() {
                             ));
                         });
                     }
-                    $(this).addClass('selectedItem');
+                    listItem.addClass('selectedItem');
                 });
             });
         }
