@@ -7,9 +7,10 @@ Uses stream.m and ffmpeg to do the hard parts.
 Features:
 * Conversion and streaming in webm format
 * Integrated movie/TV library (powered by Shoebox technology)
+* Video source plugins
 * Server side pause/resume support
 * Stream resynchronization
-* Some kind of API, not RESTful yet
+* API that makes an attempt to be RESTful
 
 Setup:
 * Haha good luck
