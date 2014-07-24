@@ -98,15 +98,59 @@ class ShoeboxShowsListHandler extends AuthenticationRequired {
 class ShoeboxMoviesItemHandler extends AuthenticationRequired {
     function get($id) {
         $sb = new Shoebox();
-        $data = $sb->getMovieData($id);
-        json_response($data);
+        $data = $sb->getMovieData($id, TRUE);
+        $resp = array(
+            "name"        => $data["title"]
+            "description" => $data["description"],
+            "path"        => $data["langs"][0]["stream"],
+            "image"       => $data["poster"],
+            "type"        => "video",
+            "duration"    => get_duration($video),
+        );
+        json_response($resp);
     }
 }
 
 class ShoeboxShowsItemHandler extends AuthenticationRequired {
     function get($id) {
         $sb = new Shoebox();
+        $resp = array("resources" => array());
+        
         $data = $sb->getTVData($id);
+        foreach ($data["season_info"] as $idx => $item) {
+            $resp["resources"][] = array(
+                "name" => "Season " . $idx,
+                "href" => "/api/addons/shoebox/videos/shows/" . $id . "/" . $idx,
+                "type" => "directory",
+            );
+        }
+        json_response($resp);
+    }
+}
+
+
+class ShoeboxShowsSeasonHandler extends AuthenticationRequired {
+    function get($id, $season) {
+        $sb = new Shoebox();
+        $resp = array("resources" => array());
+        
+        $data = $sb->getTVData($id);
+        foreach ($data["season_info"]["titles"] as $idx => $item) {
+            $resp["resources"][] = array(
+                "name" => "Episode " . $idx . ($item === "" ? "" : " ($item)"),
+                "href" => "/api/addons/shoebox/videos/shows/" . $id . "/" . $season . "/" . $idx,
+                "type" => "video",
+            );
+        }
+        json_response($resp);
+    }
+}
+
+class ShoeboxShowsEpisodeHandler extends AuthenticationRequired {
+    function get($id, $season, $episode) {
+        $sb = new Shoebox();
+        $data = $sb->getEpisodeData($id, $season, $episode, TRUE);
+        
         json_response($data);
     }
 }
