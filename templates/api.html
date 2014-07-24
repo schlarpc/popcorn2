@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Popcorn 2 API</title>
+  </head>
+  <body>
+    <p>
+      Initial API design notes.
+      Not final or even necessarily representative of current implementation.
+    </p>
+<pre>
+GET /api/videos
+    {
+        "resources": [
+            "/api/videos/1234567890abcdef",
+            "/api/videos/fedcba0987654321",
+        ]
+    }
+GET /api/videos/1234567890abcdef
+    {
+        "type": "video",
+        "path": "/home/popcorn/funnyvideo.mp4",
+        "name": "funnyvideo",
+        "thumbnail": "/api/videos/1234567890abcdef/thumbnail?time=120",
+        "description": null,
+    }
+DELETE /api/videos/1234567890abcdef
+    {
+        "success": true,
+    }
+GET /api/videos/123457890abcdef/thumbnail?time=$time
+    ...jpeg image...
+ 
+ 
+GET /api/stream
+    {
+        "streaming": false,
+        "path": "/home/popcorn/funnyvideo.mp4",
+        "elapsed": 40,
+        "duration": 40
+    }
+POST /api/stream/play
+path=$path&time=$time
+    {
+        "success": true
+    }
+POST /api/stream/pause
+    {
+        "success": true
+    }
+POST /api/stream/resume
+    {
+        "success": true
+    }
+POST /api/stream/stop
+    {
+        "success": true
+    }
+ 
+    
+GET /api/addons
+    {
+        "addons": [
+            "/api/addons/shoebox",
+            "/api/addons/youtube",
+            "/api/addons/rtorrent"
+        ]
+    }
+ 
+ 
+GET /api/addons/shoebox
+    {
+        "name": "Shoebox"
+        "type": "stream",
+        "search": "/api/addons/shoebox/search"
+        "videos": "/api/addons/shoebox/videos"
+    }
+GET /api/addons/shoebox/search?q=$q
+    {
+        "resources": [
+            "/api/addons/shoebox/videos/movies/2978",
+            "/api/addons/shoebox/videos/shows/154",
+        ]
+    }
+GET /api/addons/shoebox/videos
+    {
+        "resources": [
+            "/api/addons/shoebox/videos/movies/1",
+            "/api/addons/shoebox/videos/movies/2",
+            "/api/addons/shoebox/videos/movies/3",
+            "/api/addons/shoebox/videos/shows/1",
+            "/api/addons/shoebox/videos/shows/2",
+            "/api/addons/shoebox/videos/shows/3",
+        ]
+    }
+GET /api/addons/shoebox/videos/movies/2978
+    {
+        "type": "video",
+        "path": "http://cs541303v6.vk.me/u200935524/videos/f36a478bc2.720.mp4?extra=PEofPucmrKVFz9xWMLdHOwrvCQsP_48OsmVAsgtGXPJ9DUMIHqwKCMEaZzAsfHzVgrTy7ohFgsGhvi5a66NmVcuHwGEo7hXwEimBi5u9FAsvRsZO2YAwEqU",
+        "name": "Who Framed Roger Rabbit",
+        "thumbnail": "http://best-pics-hosting.cc/upload/moviebox/1379358281.jpg",
+        "description": "A toon hating detective is a cartoon rabbit's only hope to prove his innocence when he is accused of murder.",
+    }
+GET /api/addons/shoebox/videos/shows/154
+    {
+        "type": "directory",
+        "name": "Arrow",
+        "thumbnail": "http://best-pics-hosting.cc/upload/moviebox/1350039934.jpg",
+        "description": "After a violent shipwreck, billionaire playboy Oliver Queen was missing and presumed dead for five years before being discovered alive on a remote island in the Pacific. When he returns home to Starling City, his devoted mother Moira, much-beloved sister Thea, and best friend Tommy welcome him home, but they sense Oliver has been changed by his ordeal on the island...",
+        "resources": [
+            "/api/addons/shoebox/videos/shows/154/1",
+            "/api/addons/shoebox/videos/shows/154/2",
+        ]
+    }
+GET /api/addons/shoebox/videos/shows/154/1
+    {
+        "type": "directory",
+        "name": "Season 1",
+        "thumbnail": "http://best-pics-hosting.cc/upload/banners/1356726710.jpg",
+        "description": null,
+        "resources": [
+            "/api/addons/shoebox/videos/shows/154/1/1",
+            "/api/addons/shoebox/videos/shows/154/1/2",
+            "/api/addons/shoebox/videos/shows/154/1/3",
+        ]
+    }
+GET /api/addons/shoebox/videos/shows/154/1/1
+    {
+        "type": "video",
+        "path": "http://cs541307v6.vk.me/u203957038/videos/c2753af638.720.mp4?extra=uymzrbgxGFGcyIFNKKf7pm7gAvpoTnrf492bFr9XUF7Xxq3Tw1wfPjHMPoXOANaG6RT-vVjyBxF3b9qnAadRjEYQ_M_UM5AzHYfkUc_Vmm4F9wUVpgyaCMY",
+        "name": "Episode 1",
+        "thumbnail": "http://best-pics-hosting.cc/upload/episodes_thumbs/154/1_1.jpg",
+        "description": null,
+    }
+    
+ 
+GET /api/addons/rtorrent
+    {
+        "name": "rTorrent",
+        "type": "download",
+        "download": "/api/addons/rtorrent/download",
+    }
+POST /api/addons/rtorrent/download
+resource=$resource
+    {
+        "success": true,
+    }
+    
+    
+</pre>
+  </body>
