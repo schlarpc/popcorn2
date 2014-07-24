@@ -20,7 +20,12 @@ class VideosListHandler extends AuthenticationRequired {
 
 class VideosInfoHandler extends AuthenticationRequired {
     function delete() {
-        // TODO
+        $video = slug_to_video($video_hash);
+        if ($video === FALSE) {
+            ToroHook::fire("404");
+        }
+        
+        unlink($video);
     }
 
     function get($video_hash) {
