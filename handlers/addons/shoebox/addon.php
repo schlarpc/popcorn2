@@ -44,17 +44,37 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
             $resp["resources"][] = array(
                 "name" => $result["title"],
                 "href" => "/api/addons/shoebox/videos/" . $result["type"] . "/" . $result["id"],
+                "type" => $result["type"] === "movies" ? "video" : "directory";
             );
         }
-        
         json_response($resp);
     }
 }
 
+
+class ShoeboxVideosHandler extends AuthenticationRequired {
+    function get() {
+        $resp = array("resources" => array(
+            array(
+                "name" => "Movies",
+                "href" => "/api/addons/shoebox/videos/movies",
+                "type" => "directory",
+            ),
+            array(
+                "name" => "TV Shows",
+                "href" => "/api/addons/shoebox/videos/shows",
+                "type" => "directory",
+            ),
+        ));
+        json_reponse($resp);
+    }
+}
 
 
 $addon_routes = array(
     "/api/addons/shoebox"        => "ShoeboxHandler",
     "/api/addons/shoebox/search" => "ShoeboxSearchHandler",
     //"/api/addons/shoebox/videos" => "ShoeboxVideosHandler",
+    //"/api/addons/shoebox/videos" => "ShoeboxMoviesListHandler",
+    //"/api/addons/shoebox/videos" => "ShoeboxShowsListHandler",
 );

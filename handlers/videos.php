@@ -12,6 +12,7 @@ class VideosListHandler extends AuthenticationRequired {
             $resp["resources"][] = array(
                 "name" => path_to_friendly_name($video),
                 "href" => "/api/videos/" . slug_hash($video),
+                "type" => "video",
             );
         }
         json_response($resp);
@@ -35,11 +36,11 @@ class VideosInfoHandler extends AuthenticationRequired {
         }
         
         $resp = array(
-            "type"        => "video",
             "name"        => path_to_friendly_name($video),
             "description" => NULL,
             "path"        => $video,
             "image"       => "/api/videos/" . $video_hash . "/thumbnail?time=" . (int) (get_duration($video) * .1),
+            "type"        => "video",
             "duration"    => get_duration($video),
         );
         json_response($resp);
