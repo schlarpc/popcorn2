@@ -1,5 +1,49 @@
 <?php
 
+class PopcornItem {
+    public $name;
+    public $type;
+    public $href;
+    public $description;
+    public $images;
+    
+    function __construct() {
+        $this->images = array();
+    }
+    
+    function toJSON() {
+        $resp = array();
+        foreach (get_object_vars($self) as $prop => $value) {
+            if ($value !== NULL && $value !== array()) {
+                $resp[$prop] = $value;
+            }
+        }
+        return json_encode($resp);
+    }
+}
+
+class PopcornDirectory extends PopcornItem {
+    public $resources;
+    
+    function __construct() {
+        $this->resources = array();
+        parent::__construct();
+    }
+}
+
+class PopcornVideo extends PopcornItem {
+    public $path;
+    public $duration;
+}
+
+class PopcornAddon extends PopcornItem {
+    public $category;
+    public $videos;
+    public $search;
+    public $download;
+}
+
+
 class AuthenticationRequired {
     function __construct() {
         ToroHook::add("before_handler", "authenticate");
