@@ -3,8 +3,7 @@
 class AddonsListHandler extends AuthenticationRequired  {
     function get() {
         $dir = new PopcornDirectory();
-        $dir->name = "Popcorn Addons";
-        $dir->type = "directory";
+        $dir->name = "Addons";
         $dir->href = "/api/addons";
     
         $addon_dir = "handlers/addons/";
