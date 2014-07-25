@@ -100,7 +100,7 @@ class ShoeboxShowsListHandler extends AuthenticationRequired {
             $show->href = "/api/addons/shoebox/videos/shows/" . $item["id"];
             $dir->resources[] = $show->toArray();
         }
-        json_response($resp);
+        json_response($dir->toArray());
     }
 }
 
@@ -123,17 +123,16 @@ class ShoeboxMoviesItemHandler extends AuthenticationRequired {
 class ShoeboxShowsItemHandler extends AuthenticationRequired {
     function get($id) {
         $sb = new Shoebox();
-        $resp = array("resources" => array());
+        $dir = new PopcornDirectory();
         
         $data = $sb->getTVData($id);
         foreach ($data["season_info"] as $idx => $item) {
-            $resp["resources"][] = array(
-                "name" => "Season " . $idx,
-                "href" => "/api/addons/shoebox/videos/shows/" . $id . "/" . $idx,
-                "type" => "directory",
-            );
+            $season = new PopcornDirectory();
+            $season->name = "Season " . $idx;
+            $season->href = "/api/addons/shoebox/videos/shows/" . $id . "/" . $idx;
+            $dir->resources[] = $season->toArray();
         }
-        json_response($resp);
+        json_response($dir->toArray());
     }
 }
 
