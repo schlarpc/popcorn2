@@ -33,15 +33,19 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
         }
         usort($search_results, function ($a, $b) { return intval($b['rating']) - intval($a['rating']); });
         
+        $dir = new PopcornDirectory();
+        $dir->name = "Results for \"$query\"";
+        $dir->href = "/api/addons/shoebox/search?q=" . urlencode($query);
+        
         $resp = array("resources" => array());
         foreach (array_slice($search_results, 0, 50) as $result) {
-            $resp["resources"][] = array(
-                "name" => $result["title"],
-                "href" => "/api/addons/shoebox/videos/" . $result["type"] . "/" . $result["id"],
-                "type" => $result["type"] === "movies" ? "video" : "directory",
-            );
+            $item = new PopcornItem();
+            $item->name = $result["title"];
+            $item->href = "/api/addons/shoebox/videos/" . $result["type"] . "/" . $result["id"];
+            $item->type = $result["type"] === "movies" ? "video" : "directory";
+            $dir->resources[] = $item->toArray();
         }
-        json_response($resp);
+        json_response($dir->toArray());
     }
 }
 
