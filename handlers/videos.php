@@ -33,20 +33,18 @@ class VideosInfoHandler extends AuthenticationRequired {
     }
 
     function get($video_hash) {
-        $video = slug_to_video($video_hash);
-        if ($video === FALSE) {
+        $video_path = slug_to_video($video_hash);
+        if ($video_path === FALSE) {
             ToroHook::fire("404");
         }
         
-        $resp = array(
-            "name"        => path_to_friendly_name($video),
-            "description" => NULL,
-            "path"        => $video,
-            "image"       => "/api/videos/" . $video_hash . "/thumbnail?time=" . (int) (get_duration($video) * .1),
-            "type"        => "video",
-            "duration"    => get_duration($video),
-        );
-        json_response($resp);
+        $video = new PopcornVideo();
+        $video->name = path_to_friendly_name($video_path);
+        $video->href = "/api/videos/" . $video_hash;
+        $video->image = "/api/videos/" . $video_hash . "/thumbnail?time=" . (int) (get_duration($video_path) * .1);
+        $video->duration = get_duration($video_path);
+        
+        json_response($video->toArray());
     }
 }
 
