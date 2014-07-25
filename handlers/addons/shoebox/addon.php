@@ -146,7 +146,7 @@ class ShoeboxShowsSeasonHandler extends AuthenticationRequired {
         $data = $sb->getTVData($id);
         
         $dir = new PopcornDirectory();
-        $dir->name = $data["title"];
+        $dir->name = $data["title"] . " - Season $season";
         $dir->href = "/api/addons/shoebox/videos/shows/" . $id . "/" . $season;
         
         foreach ($data["season_info"][$season]["titles"] as $idx => $item) {
@@ -163,19 +163,18 @@ class ShoeboxShowsEpisodeHandler extends AuthenticationRequired {
     function get($id, $season, $episode) {
         $sb = new Shoebox();
         $data = $sb->getEpisodeData($id, $season, $episode, TRUE);
-        $title = $data["title"] . "- Season $season, Episode $episode";
+        
+        $episode = new PopcornVideo();
+        $title = $data["title"] . " - Season $season, Episode $episode";
         if ($data["episode_title"] !== "") {
             $title .= " ({$data["episode_title"]})";
         }
-        $resp = array(
-            "name"        => $title,
-            "description" => $data["description"],
-            "path"        => $data["langs"][0]["stream"],
-            "image"       => $data["thumb"],
-            "type"        => "video",
-            "duration"    => get_duration($data["langs"][0]["stream"]),
-        );
-        json_response($resp);
+        $episode->name = $title;
+        $episode->href = "/api/addons/shoebox/videos/shows/" . $id . "/" . $season . "/" . $episode;
+        $episode->path = $data["langs"][0]["stream"];
+        $episodes->images["thumbnail"] = $data["thumb"];
+        
+        json_response($episode->toArray());
     }
 }
 
