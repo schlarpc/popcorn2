@@ -107,16 +107,16 @@ class ShoeboxShowsListHandler extends AuthenticationRequired {
 class ShoeboxMoviesItemHandler extends AuthenticationRequired {
     function get($id) {
         $sb = new Shoebox();
+        $movie = new PopcornVideo();
+        
         $data = $sb->getMovieData($id, TRUE);
-        $resp = array(
-            "name"        => $data["title"],
-            "description" => $data["description"],
-            "path"        => $data["langs"][0]["stream"],
-            "image"       => $data["poster"],
-            "type"        => "video",
-            "duration"    => get_duration($data["langs"][0]["stream"]),
-        );
-        json_response($resp);
+        
+        $movie->name = $data["title"];
+        $movie->description = $data["description"];
+        $movie->path = $data["langs"][0]["stream"];
+        $movie->images["poster"] = $data["poster"];
+        
+        json_response($movie->toArray());
     }
 }
 
