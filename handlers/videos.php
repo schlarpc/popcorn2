@@ -2,20 +2,23 @@
 
 class VideosListHandler extends AuthenticationRequired {
     function get() {
+        $dir = new PopcornDirectory();
+        $dir->name = "Videos";
+        $dir->href = "/api/videos";
+        
         $videos = array();
         foreach (Config::get('video_dirs') as $video_dir) {
             $videos = array_merge($videos, find_video_files($video_dir));
         }
         
         $resp = array("resources" => array());
-        foreach ($videos as $video) {
-            $resp["resources"][] = array(
-                "name" => path_to_friendly_name($video),
-                "href" => "/api/videos/" . slug_hash($video),
-                "type" => "video",
-            );
+        foreach ($videos as $video_path) {
+            $video = new PopcornVideo();
+            $video->name = path_to_friendly_name($video_path);
+            $video->href = "/api/videos/" . slug_hash($video_path);
+            $dir->resources[] = $video->toArray();
         }
-        json_response($resp);
+        json_response($dir->toArray());
     }
 }
 
