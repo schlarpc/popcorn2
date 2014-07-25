@@ -81,7 +81,7 @@ class ShoeboxMoviesListHandler extends AuthenticationRequired {
             $movie = new PopcornVideo();
             $movie->name = $item["title"];
             $movie->href = "/api/addons/shoebox/videos/movies/" . $item["id"];
-            $dir->resources = $movie->toArray();
+            $dir->resources[] = $movie->toArray();
         }
         json_response($dir->toArray());
     }
@@ -98,7 +98,7 @@ class ShoeboxShowsListHandler extends AuthenticationRequired {
             $show = new PopcornDirectory();
             $show->name = $item["title"];
             $show->href = "/api/addons/shoebox/videos/shows/" . $item["id"];
-            $dir->resources = $show->toArray();
+            $dir->resources[] = $show->toArray();
         }
         json_response($resp);
     }
