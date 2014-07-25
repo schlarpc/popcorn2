@@ -81,7 +81,6 @@ class ShoeboxMoviesListHandler extends AuthenticationRequired {
             $movie = new ShoeboxVideo();
             $movie->name = $item["title"];
             $movie->href = "/api/addons/shoebox/videos/movies/" . $item["id"],
-            $movie->type = "video";
             $dir->resources = $movie->toArray();
         }
         json_response($dir->toArray());
@@ -91,14 +90,15 @@ class ShoeboxMoviesListHandler extends AuthenticationRequired {
 class ShoeboxShowsListHandler extends AuthenticationRequired {
     function get() {
         $sb = new Shoebox();
-        $resp = array("resources" => array());
+        $dir = new PopcornDirectory();
+        $dir->name = "TV Shows";
+        $dir->href = "/api/addons/shoebox/videos/shows";
         
         foreach(array_slice($sb->getTVList(), 0, 50) as $idx => $item) {
-            $resp["resources"][] = array(
-                "name" => $item["title"],
-                "href" => "/api/addons/shoebox/videos/shows/" . $item["id"],
-                "type" => "directory",
-            );
+            $show = new ShoeboxDirectory();
+            $show->name = $item["title"];
+            $show->href = "/api/addons/shoebox/videos/shows/" . $item["id"],
+            $dir->resources = $show->toArray();
         }
         json_response($resp);
     }
