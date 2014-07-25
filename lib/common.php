@@ -27,6 +27,7 @@ class PopcornDirectory extends PopcornItem {
     
     function __construct() {
         $this->resources = array();
+        $this->type = "directory";
         parent::__construct();
     }
 }
@@ -34,6 +35,11 @@ class PopcornDirectory extends PopcornItem {
 class PopcornVideo extends PopcornItem {
     public $path;
     public $duration;
+        
+    function __construct() {
+        $this->type = "video";
+        parent::__construct();
+    }
 }
 
 class PopcornAddon extends PopcornItem {
@@ -41,6 +47,11 @@ class PopcornAddon extends PopcornItem {
     public $videos;
     public $search;
     public $download;
+        
+    function __construct() {
+        $this->type = "addon";
+        parent::__construct();
+    }
 }
 
 
