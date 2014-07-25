@@ -52,19 +52,21 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
 
 class ShoeboxVideosHandler extends AuthenticationRequired {
     function get() {
-        $resp = array("resources" => array(
-            array(
-                "name" => "Movies",
-                "href" => "/api/addons/shoebox/videos/movies",
-                "type" => "directory",
-            ),
-            array(
-                "name" => "TV Shows",
-                "href" => "/api/addons/shoebox/videos/shows",
-                "type" => "directory",
-            ),
-        ));
-        json_response($resp);
+        $dir = ShoeboxDirectory();
+        $dir->name = "Shoebox Videos";
+        $dir->href = "/api/addons/shoebox/videos";
+        
+        $movies = ShoeboxDirectory();
+        $movies->name = "Movies";
+        $movies->href = "/api/addons/shoebox/videos/movies";
+        $dir->resources[] = $movies->toArray();
+        
+        $shows = ShoeboxDirectory();
+        $shows->name = "TV Shows";
+        $shows->href = "/api/addons/shoebox/videos/shows";
+        $dir->resources[] = $shows->toArray();
+        
+        json_response($dir->toArray());
     }
 }
 
