@@ -164,17 +164,17 @@ class ShoeboxShowsEpisodeHandler extends AuthenticationRequired {
         $sb = new Shoebox();
         $data = $sb->getEpisodeData($id, $season, $episode, TRUE);
         
-        $episode = new PopcornVideo();
+        $video = new PopcornVideo();
         $title = $data["title"] . " - Season $season, Episode $episode";
         if ($data["episode_title"] !== "") {
             $title .= " ({$data["episode_title"]})";
         }
-        $episode->name = $title;
-        $episode->href = "/api/addons/shoebox/videos/shows/" . $id . "/" . $season . "/" . $episode;
-        $episode->path = $data["langs"][0]["stream"];
-        $episodes->images["thumbnail"] = $data["thumb"];
+        $video->name = $title;
+        $video->href = "/api/addons/shoebox/videos/shows/" . $id . "/" . $season . "/" . $episode;
+        $video->path = $data["langs"][0]["stream"];
+        $video->images["thumbnail"] = $data["thumb"];
         
-        json_response($episode->toArray());
+        json_response($video->toArray());
     }
 }
 
