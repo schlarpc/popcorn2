@@ -52,16 +52,16 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
 
 class ShoeboxVideosHandler extends AuthenticationRequired {
     function get() {
-        $dir = ShoeboxDirectory();
+        $dir = PopcornDirectory();
         $dir->name = "Shoebox Videos";
         $dir->href = "/api/addons/shoebox/videos";
         
-        $movies = ShoeboxDirectory();
+        $movies = PopcornDirectory();
         $movies->name = "Movies";
         $movies->href = "/api/addons/shoebox/videos/movies";
         $dir->resources[] = $movies->toArray();
         
-        $shows = ShoeboxDirectory();
+        $shows = PopcornDirectory();
         $shows->name = "TV Shows";
         $shows->href = "/api/addons/shoebox/videos/shows";
         $dir->resources[] = $shows->toArray();
@@ -73,16 +73,18 @@ class ShoeboxVideosHandler extends AuthenticationRequired {
 class ShoeboxMoviesListHandler extends AuthenticationRequired {
     function get() {
         $sb = new Shoebox();
-        $resp = array("resources" => array());
+        $dir = new PopcornDirectory();
+        $dir->name = "Movies";
+        $dir->href = "/api/addons/shoebox/videos/movies";
         
         foreach(array_slice($sb->getMovieList(), 0, 50) as $idx => $item) {
-            $resp["resources"][] = array(
-                "name" => $item["title"],
-                "href" => "/api/addons/shoebox/videos/movies/" . $item["id"],
-                "type" => "video",
-            );
+            $movie = new ShoeboxVideo();
+            $movie->name = $item["title"];
+            $movie->href = "/api/addons/shoebox/videos/movies/" . $item["id"],
+            $movie->type = "video";
+            $dir->resources = $movie->toArray();
         }
-        json_response($resp);
+        json_response($dir->toArray());
     }
 }
 
