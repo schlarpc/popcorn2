@@ -16,7 +16,7 @@ class AddonsListHandler extends AuthenticationRequired  {
                     $addon->name = $entry;
                     $addon->type = "addon";
                     $addon->href = "/api/addons/" . $entry;
-                    $dir->resources[] = $addon;
+                    $dir->resources[] = $addon->toArray();
                 }
             }
             closedir($dh);
