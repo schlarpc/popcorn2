@@ -10,7 +10,7 @@ Features:
 * Video source plugins
 * Server side pause/resume support
 * Stream resynchronization
-* API that makes an attempt to be RESTful
+* [API that makes an attempt to be RESTful](APIDOCS.md)
 
 Setup:
 * Haha good luck
