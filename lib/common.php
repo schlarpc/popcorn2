@@ -13,7 +13,7 @@ class PopcornItem {
     
     function toJSON() {
         $resp = array();
-        foreach (get_object_vars($self) as $prop => $value) {
+        foreach (get_object_vars($this) as $prop => $value) {
             if ($value !== NULL && $value !== array()) {
                 $resp[$prop] = $value;
             }
