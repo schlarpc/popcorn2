@@ -11,14 +11,16 @@ class PopcornItem {
         $this->images = array();
     }
     
-    function toJSON() {
+    function toArray() {
         $resp = array();
         foreach (get_object_vars($this) as $prop => $value) {
-            if ($value !== NULL && $value !== array()) {
+            if (is_object($value) {
+                $resp[$prop] = $value->toArray();
+            } elseif ($value !== NULL && $value !== array()) {
                 $resp[$prop] = $value;
             }
         }
-        return json_encode($resp);
+        return $resp;
     }
 }
 

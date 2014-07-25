@@ -22,6 +22,6 @@ class AddonsListHandler extends AuthenticationRequired  {
             closedir($dh);
         }
         
-        echo $dir->toJSON();
+        json_response($dir->toArray());
     }
 }
