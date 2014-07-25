@@ -52,16 +52,16 @@ class ShoeboxSearchHandler extends AuthenticationRequired {
 
 class ShoeboxVideosHandler extends AuthenticationRequired {
     function get() {
-        $dir = PopcornDirectory();
+        $dir = new PopcornDirectory();
         $dir->name = "Shoebox Videos";
         $dir->href = "/api/addons/shoebox/videos";
         
-        $movies = PopcornDirectory();
+        $movies = new PopcornDirectory();
         $movies->name = "Movies";
         $movies->href = "/api/addons/shoebox/videos/movies";
         $dir->resources[] = $movies->toArray();
         
-        $shows = PopcornDirectory();
+        $shows = new PopcornDirectory();
         $shows->name = "TV Shows";
         $shows->href = "/api/addons/shoebox/videos/shows";
         $dir->resources[] = $shows->toArray();
