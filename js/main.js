@@ -200,7 +200,7 @@ function toggleVideos() {
                             var filename = info.path;
                         
                             listItem.append($('<div />').addClass('movieDetails').append(
-                                $('<img />').attr('src', info.image),
+                                $('<img />').attr('src', info.images.thumbnail),
                                 $('<div />').append(
                                     $('<a />').text('Play').click(function () {
                                         console.log('Issuing play request for:', filename);
