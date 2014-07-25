@@ -4,13 +4,14 @@ require("handlers/addons/shoebox/lib/shoebox.php");
 
 class ShoeboxHandler extends AuthenticationRequired {
     function get() {
-        $resp = array(
-            "name" => "Shoebox",
-            "type" => "stream",
-            "search" => "/api/addons/shoebox/search",
-            "videos" => "/api/addons/shoebox/videos",
-        );
-        json_response($resp);
+        $addon = new PopcornAddon();
+        $addon->name = "Shoebox";
+        $addon->href = "/api/addons/shoebox";
+        $addon->category = "stream";
+        $addon->search = "/api/addons/shoebox/search";
+        $addon->videos = "/api/addons/shoebox/videos";
+        
+        json_response($addon->toArray());
     }
 }
 
