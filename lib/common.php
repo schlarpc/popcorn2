@@ -14,7 +14,7 @@ class PopcornItem {
     function toArray() {
         $resp = array();
         foreach (get_object_vars($this) as $prop => $value) {
-            if (is_object($value) {
+            if (is_object($value)) {
                 $resp[$prop] = $value->toArray();
             } elseif ($value !== NULL && $value !== array()) {
                 $resp[$prop] = $value;
